@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CropTwin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .stat:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .stat-value {
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .status.healthy {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+        }
+        
+        .config-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .alert.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .farm-list {
+            list-style: none;
+        }
+        
+        .farm-item {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .farm-item:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+        
+        .farm-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .farm-details {
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌾 CropTwin Dashboard</h1>
+            <p class="subtitle">Sensor-less Digital Twin Platform for Smallholder Farms</p>
+        </header>
+
+        <div id="config-alert" class="alert info">
+            <strong>Setup Required:</strong> Configure your AWS API endpoint below to connect to your backend.
+        </div>
+
+        <div class="config-section">
+            <h2>Configuration</h2>
+            <div class="input-group">
+                <label for="apiEndpoint">AWS API Gateway Endpoint:</label>
+                <input type="text" id="apiEndpoint" placeholder="https://your-api-id.execute-api.region.amazonaws.com/prod">
+            </div>
+            <button class="btn" onclick="saveConfig()">Save Configuration</button>
+            <button class="btn" onclick="loadDemoData()" style="background: #28a745;">Load Demo Data</button>
+            <button class="btn" onclick="stopDemo()" style="background: #dc3545; display: none;" id="stopDemoBtn">Stop Demo</button>
+            <button class="btn" onclick="resumeDemo()" style="background: #ffc107; display: none;" id="resumeDemoBtn">Resume Demo</button>
+        </div>
+
+        <div id="dashboard" style="display: none;">
+            <div class="grid">
+                <div class="card">
+                    <h2>📊 System Overview</h2>
+                    <div class="stat">
+                        <span class="stat-label">Total Farms</span>
+                        <span class="stat-value" id="totalFarms">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Active Advisories</span>
+                        <span class="stat-value" id="activeAdvisories">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">SMS Sent Today</span>
+                        <span class="stat-value" id="smsSent">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">System Status</span>
+                        <span class="status healthy" id="systemStatus">Operational</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🌡️ Weather Data</h2>
+                    <div class="stat">
+                        <span class="stat-label">Temperature</span>
+                        <span class="stat-value" id="temperature">--°C</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Humidity</span>
+                        <span class="stat-value" id="humidity">--%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Rainfall (7 days)</span>
+                        <span class="stat-value" id="rainfall">-- mm</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Last Updated</span>
+                        <span class="stat-value" id="weatherUpdate">--</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🛰️ Satellite Data</h2>
+                    <div class="stat">
+                        <span class="stat-label">NDVI Average</span>
+                        <span class="stat-value" id="ndvi">--</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">EVI Average</span>
+                        <span class="stat-value" id="evi">--</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">LAI Average</span>
+                        <span class="stat-value" id="lai">--</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Last Updated</span>
+                        <span class="stat-value" id="satelliteUpdate">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h2>🚨 Recent Alerts</h2>
+                    <ul id="alertsList" class="farm-list">
+                        <li class="loading">No alerts</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2>🌾 Farm Twins</h2>
+                    <ul id="farmsList" class="farm-list">
+                        <li class="loading">Loading farms...</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2>📱 Recent Advisories</h2>
+                    <ul id="advisoriesList" class="farm-list">
+                        <li class="loading">Loading advisories...</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
