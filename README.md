@@ -2,6 +2,9 @@
 
 > Sensor-less Digital Twin Platform for Smallholder Farmers in India
 
+## 🚀 Live Demo
+https://nrr385.github.io/CropTwin/
+
 [![GitHub](https://img.shields.io/badge/GitHub-NRR385%2FCropTwin-blue?logo=github)](https://github.com/NRR385/CropTwin)
 [![AWS](https://img.shields.io/badge/AWS-Serverless-orange?logo=amazon-aws)](https://aws.amazon.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -19,7 +22,7 @@ CropTwin is a precision agriculture platform that creates virtual replicas (digi
 
 **🎥 Try it Now:**
 - [View Screenshots](#-screenshots) - See the dashboard in action
-- [Live Demo](https://nrr385.github.io/CropTwin/web/) - Interactive demo (Coming Soon)
+- [Live Demo](https://nrr385.github.io/CropTwin/) - Interactive dashboard
 - [Quick Start](QUICKSTART.md) - Run locally in 5 minutes
 
 ### The Problem
