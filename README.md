@@ -14,7 +14,7 @@ https://nrr385.github.io/CropTwin/
 
 ## 📖 Overview
 
-CropTwin is a precision agriculture platform that creates virtual replicas (digital twins) of farms for smallholder farmers in Telangana and Andhra Pradesh, India. By leveraging free government data sources and scientific crop models, it provides real-time agricultural advisories via SMS without requiring expensive sensors.
+CropTwin is a precision agriculture platform that creates virtual replicas (digital twins) of farms for smallholder farmers. By leveraging free government data sources and scientific crop models, it provides real-time agricultural advisories via SMS without requiring expensive sensors.
 
 **📚 Documentation:**
 - [Quick Start Guide](QUICKSTART.md) - Get started in 5 minutes
