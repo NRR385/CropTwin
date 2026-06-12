@@ -3,7 +3,7 @@
 > Sensor-less Digital Twin Platform for Smallholder Farmers in India
 
 ## 🚀 Live Demo
-https://nrr385.github.io/CropTwin/
+👉 [Try 🌱CropTwin Here](https://nrr385.github.io/CropTwin/)
 
 [![GitHub](https://img.shields.io/badge/GitHub-NRR385%2FCropTwin-blue?logo=github)](https://github.com/NRR385/CropTwin)
 [![AWS](https://img.shields.io/badge/AWS-Serverless-orange?logo=amazon-aws)](https://aws.amazon.com/)
