@@ -1,6 +1,6 @@
 # 🌾 CropTwin Platform
 
-> Sensor-less Digital Twin Platform for Smallholder Farmers in India
+> Sensor-less Digital Twin Platform for Smallholder Farmers in India.
 
 ## 🚀 Live Demo
 👉 [Try 🌱CropTwin Here](https://nrr385.github.io/CropTwin/)
